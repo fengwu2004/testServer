@@ -1,30 +1,28 @@
 var express = require('express');
 var router = express.Router();
-var fakelocating = require('./locate');
-
+var Locate = require('./LocateServer');
 /* get users listing. */
+
 router.get('/', function(req, res, next) {
+
     res.send('respond with a resource');
 });
 
 var locating = '/locating';
 
-var locate = new fakelocating();
-
-locate.init();
+var locate = new Locate();
 
 router.post(locating, function (req, res, next)  {
 
-    console.log(req.body.regionId);
+    var phoneUUID = req.body.phoneUUID;
 
-    var json = locate.wrapNextPos();
+    var regionId = req.body.regionId;
 
-    res.send(json);
-});
+    var seriesNumber = req.body.seriesNumber;
 
-router.get(locating, function (req, res, next)  {
+    var json = locate.getNextPos(phoneUUID, regionId);
 
-    var json = locate.wrapNextPos();
+    json.data.seriesNumber = seriesNumber;
 
     res.send(json);
 });
