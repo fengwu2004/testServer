@@ -4,18 +4,16 @@
 
 var Locator = require('./Locator');
 
-var Map = require('./Map');
-
 function LocateServer() {
 
     this.locators = new Map();
 }
 
-function getLocator (regionId) {
+LocateServer.prototype.getLocator = function (regionId) {
 
-    if  (!this.locators.containsKey(regionId)){
+    if  (!this.locators.has(regionId)){
 
-        this.locators.put(regionId, createLocator(regionId));
+        this.locators.set(regionId, createLocator(regionId));
     }
 
     var locator = this.locators.get(regionId);
@@ -32,11 +30,36 @@ function createLocator(regionId) {
 
 LocateServer.prototype.getNextPos = function (regionId, phoneUUID) {
 
-    var locator = getLocator(regionId);
+    var locator = this.getLocator(regionId);
 
     var pos = locator.getPos(phoneUUID);
 
-    return pos;
+    var data = new Object();
+
+    data.position = new Object();
+
+    data.position.x = pos.x;
+
+    data.position.y = pos.y;
+
+    //
+    data.floors = new Array();
+
+    var floor = new Object();
+
+    floor.id = pos.floorId;
+
+    floor.name = 'F2';
+
+    data.floors.push(floor);
+
+    var json = new Object();
+
+    json.code = 'success';
+
+    json.data = data;
+
+    return json;
 }
 
 module.exports = LocateServer;

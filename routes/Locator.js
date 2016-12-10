@@ -1,46 +1,53 @@
 /**
  * Created by yan on 09/12/2016.
  */
-
-var Map = require('./Map');
-
 var PositionStoreMgr = require('./PositionStoreMgr');
 
 function Locator(regionId) {
 
-    this.positions = null;
+    var indexesOfPhone = new Map();
 
-    this.indexesOfPhone = new Map();
+    var positions = new Array();
 
-    var positionStoreMgr = new positionStoreMgr();
+    var posCount = 100;
+
+    this.initPos = function (result) {
+
+        positions = result[0].position;
+
+        posCount = 20;
+
+        console.log(this);
+    }
+
+    this.getPos = function (phoneUUID) {
+
+        if (positions.length == 0) {
+
+            return null;
+        }
+
+        var posIndex = 0;
+
+        if (indexesOfPhone.has(phoneUUID)) {
+
+            posIndex = indexesOfPhone.get(phoneUUID);
+        }
+
+        ++posIndex;
+
+        posIndex = posIndex % positions.length;
+
+        indexesOfPhone.set(phoneUUID, posIndex);
+
+        return positions[posIndex];
+    }
+
+    var positionStoreMgr = new PositionStoreMgr();
     
-    positionStoreMgr.getPosByRegion(regionId, function (result) {
+    positionStoreMgr.getPosByRegion(regionId, this.initPos);
 
-        this.positions = result[0].positions;
-    });
-}
-
-Locator.prototype.getPos = function (phoneUUID) {
-
-    if (this.positions.length == 0) {
-
-        return null;
-    }
-
-    var posIndex = 0;
-
-    if (this.indexesOfPhone.containsKey(phoneUUID)) {
-
-        posIndex = this.indexesOfPhone.get(phoneUUID);
-    }
-
-    ++posIndex;
-
-    posIndex = posIndex % this.positions.length;
-
-    this.indexesOfPhone.put(phoneUUID, posIndex);
-
-    return this.positions[posIndex];
+    console.log('hello');
 }
 
 module.exports = Locator;

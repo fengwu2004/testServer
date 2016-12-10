@@ -20,7 +20,7 @@ router.post(locating, function (req, res, next)  {
 
     var seriesNumber = req.body.seriesNumber;
 
-    var json = locate.getNextPos(phoneUUID, regionId);
+    var json = locate.getNextPos(regionId, phoneUUID);
 
     json.data.seriesNumber = seriesNumber;
 

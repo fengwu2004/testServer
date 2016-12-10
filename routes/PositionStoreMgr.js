@@ -5,7 +5,7 @@ var mongodb = require('mongodb').MongoClient;
 
 function PositionStoreMgr () {
 
-
+    console.log('数据库处理');
 }
 
 PositionStoreMgr.prototype.getPosByRegion = function (regionId, callBack) {
@@ -20,8 +20,6 @@ PositionStoreMgr.prototype.getPosByRegion = function (regionId, callBack) {
         db.collection('regionPos').find({"regionId":regionId}).toArray(function (err, result) {
 
             callBack(result);
-
-            mongodb.disconnect();
         });
     });
 }
