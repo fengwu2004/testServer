@@ -27,5 +27,18 @@ router.post(locating, function (req, res, next)  {
     res.send(json);
 });
 
+var positionUploading = '/uploadpos'
+
+route.post(positionUploading, function (req, res, next) {
+
+    var regionId = req.body.regionId
+
+    var pos = req.body.position
+
+    var regionName = req.body.regionName
+
+    update
+})
+
 
 module.exports = router;

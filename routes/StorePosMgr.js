@@ -1,0 +1,44 @@
+/**
+ * Created by yan on 23/12/2016.
+ */
+
+var mongodb = require('mongodb').MongoClient;
+
+class StorePosMgr {
+
+    constructor(){
+
+
+    }
+
+    storePosToDB(regionId, regionName, pos) {
+
+        mongodb.connect('mongodb://localhost:27017/test', function (err, db) {
+
+            if (err) {
+
+                throw err
+            }
+
+            db.collection('regionPos').insertOne({"regionId":regionId, "regionName":regionName, "position":pos})
+        });
+    }
+
+    getPosByRegion(regionId, callBack) {
+
+        mongodb.connect('mongodb://localhost:27017/test', function (err, db) {
+
+            if (err) {
+
+                throw  err;
+            }
+
+            db.collection('regionPos').find({"regionId":regionId}).toArray(function (err, result) {
+
+                callBack(result);
+            });
+        });
+    }
+}
+
+module.exports = StorePosMgr;

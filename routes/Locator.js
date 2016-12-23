@@ -1,7 +1,8 @@
 /**
  * Created by yan on 09/12/2016.
  */
-var PositionStoreMgr = require('./PositionStoreMgr');
+
+var StorePosMgr = require('./StorePosMgr')
 
 function Locator(regionId) {
 
@@ -11,13 +12,11 @@ function Locator(regionId) {
 
     var posCount = 100;
 
-    this.initPos = function (result) {
+    function initPos(result) {
 
         positions = result[0].position;
 
         posCount = 20;
-
-        console.log(this);
     }
 
     this.getPos = function (phoneUUID) {
@@ -43,9 +42,9 @@ function Locator(regionId) {
         return positions[posIndex];
     }
 
-    var positionStoreMgr = new PositionStoreMgr();
+    var positionStoreMgr = new StorePosMgr();
     
-    positionStoreMgr.getPosByRegion(regionId, this.initPos);
+    positionStoreMgr.getPosByRegion(regionId, initPos);
 
     console.log('hello');
 }
