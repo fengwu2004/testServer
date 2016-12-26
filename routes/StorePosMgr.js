@@ -2,6 +2,8 @@
  * Created by yan on 23/12/2016.
  */
 
+'use strict'
+
 var mongodb = require('mongodb').MongoClient;
 
 class StorePosMgr {
@@ -19,6 +21,8 @@ class StorePosMgr {
 
                 throw err
             }
+
+            db.collection('regionPos').deleteOne({"regionId":regionId})
 
             db.collection('regionPos').insertOne({"regionId":regionId, "regionName":regionName, "position":pos})
         });

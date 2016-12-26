@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Locate = require('./LocateServer');
+var StorePosMgr = require('./StorePosMgr')
 /* get users listing. */
 
 router.get('/', function(req, res, next) {
@@ -11,6 +12,8 @@ router.get('/', function(req, res, next) {
 var locating = '/locating';
 
 var locate = new Locate();
+
+var posMgr = new StorePosMgr()
 
 router.post(locating, function (req, res, next)  {
 
@@ -29,7 +32,7 @@ router.post(locating, function (req, res, next)  {
 
 var positionUploading = '/uploadpos'
 
-route.post(positionUploading, function (req, res, next) {
+router.post(positionUploading, function (req, res, next) {
 
     var regionId = req.body.regionId
 
@@ -37,7 +40,9 @@ route.post(positionUploading, function (req, res, next) {
 
     var regionName = req.body.regionName
 
-    update
+    posMgr.storePosToDB(regionId, regionName, pos)
+
+    res.send({"code":"success"})
 })
 
 
