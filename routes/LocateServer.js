@@ -28,6 +28,11 @@ function createLocator(regionId) {
     return locator;
 }
 
+LocateServer.prototype.removeLocator = function (regionId) {
+
+    this.locators.delete(regionId)
+}
+
 LocateServer.prototype.getNextPos = function (regionId, phoneUUID) {
 
     var locator = this.getLocator(regionId);

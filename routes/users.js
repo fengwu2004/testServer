@@ -43,6 +43,8 @@ router.post(positionUploading, function (req, res, next) {
     posMgr.storePosToDB(regionId, regionName, pos)
 
     res.send({"code":"success"})
+
+    locate.removeLocator(regionId)
 })
 
 
