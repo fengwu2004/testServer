@@ -14,6 +14,11 @@ function Locator(regionId) {
 
     function initPos(result) {
 
+        if (result.length == 0) {
+
+            return;
+        }
+
         positions = result[0].position;
 
         posCount = 20;
