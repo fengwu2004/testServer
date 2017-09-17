@@ -15,7 +15,7 @@ class StorePosMgr {
 
     storePosToDB(regionId, regionName, pos) {
 
-        mongodb.connect('mongodb://192.168.0.109:27017/test', function (err, db) {
+        mongodb.connect('mongodb://localhost:27017/test', function (err, db) {
 
             if (err) {
 
@@ -30,7 +30,7 @@ class StorePosMgr {
 
     getPosByRegion(regionId, callBack) {
 
-        mongodb.connect('mongodb://192.168.0.109:27017/test', function (err, db) {
+        mongodb.connect('mongodb://localhost:27017/test', function (err, db) {
 
             if (err) {
 
